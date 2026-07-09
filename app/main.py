@@ -1,17 +1,14 @@
 from fastapi import FastAPI
 
-app = FastAPI(
-    title="CareerGraph API",
-    description="A candidate-job matching backend built with FastAPI.",
-    version="0.1.0",
-)
-
+app=FastAPI()
 
 @app.get("/")
-def root():
-    return {"message": "Welcome to CareerGraph API"}
-
+def hello():
+  return {"message":"Welcome to Career Graph"}
 
 @app.get("/health")
 def health_check():
-    return {"status": "ok"}
+    return {"status":"Server is running in Okay condition"}
+
+
+
