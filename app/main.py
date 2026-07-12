@@ -20,7 +20,7 @@ class Candidate(BaseModel):
       
       skills: List[str] | None = None
 
-      experience: Annotated [int, Field(..., gt=-1,title="Experience of the Candidate", description="Enter your Experience"))]
+      experience: Annotated [int, Field(..., gt=-1,title="Experience of the Candidate", description="Enter your Experience")]
 
       graduation_year: Annotated[int, Field(..., gt=2000, lt=2050, title="Graduation Year of the Candidate", description="Enter your Graduation Year")]
 
@@ -33,7 +33,7 @@ class Candidate(BaseModel):
       
       @field_validator('age', mode='after')
       @classmethod
-      def email_validator(cls, value):
+      def age_validator(cls, value):
           if 18<=value :
             return value
           else : raise ValueError('Invalid Age; Should be greater than or equal to 18')
@@ -45,14 +45,14 @@ class Candidate(BaseModel):
       
       @field_validator('cgpa', mode='after')
       @classmethod
-      def email_validator(cls, value):
+      def cgpa_validator(cls, value):
           if 0.0<=value<=10.0 :
             return value
           else : raise ValueError('Invalid CGPA; Should be  in the range of 0 to 10')
 
 
 @app.get("/")
-def hello():
+def welcome():
   return {"message":"Welcome to Career Graph"}
 
 @app.get("/health")
