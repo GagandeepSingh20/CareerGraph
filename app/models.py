@@ -46,10 +46,10 @@ class CandidateDB(Base):
         nullable = False,
     )
 
-    linkedin_url: Mapped[str] = mapped_column(
+    linkedin_url: Mapped[str | None] = mapped_column(
         String,
         unique=True,
-        nullable = False,
+        nullable = True,
     )
 
     skills: Mapped[list[str] | None] = mapped_column(
