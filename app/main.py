@@ -86,7 +86,7 @@ def candidates_list(db: Annotated[Session, Depends(get_db)],):
     return candidates
 
 @app.get("/candidates/{candidate_id}",
-        response_model=list[CandidateResponse],)
+        response_model=CandidateResponse,)
 def candidate_data(candidate_id: int,
                    db: Annotated[Session, Depends(get_db)],):
     statement = select(CandidateDB).where(CandidateDB.id == candidate_id)
