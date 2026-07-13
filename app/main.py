@@ -84,3 +84,18 @@ def candidates_list(db: Annotated[Session, Depends(get_db)],):
     candidates = db.scalars(statement).all()
 
     return candidates
+
+@app.get("/candidates/{candidate_id}",
+        response_model=list[CandidateResponse],)
+def candidate_data(candidate_id: int,
+                   db: Annotated[Session, Depends(get_db)],):
+    statement = select(CandidateDB).where(CandidateDB.id == candidate_id)
+    candidate = db.scalar(statement)
+
+    if candidate is None:
+        raise HTTPException(
+            status_code= status.HTTP_404_NOT_FOUND,
+            detail="Candidate not found",
+        )
+
+    return candidate
