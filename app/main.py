@@ -5,8 +5,8 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from .database import Base, engine, get_db
-from .models import CandidateDB
-from .schemas import CandidateCreate, CandidateResponse
+from .models import CandidateDB, JobDB
+from .schemas import CandidateCreate, CandidateResponse, JobCreate, JobResponse
 
 Base.metadata.create_all(bind=engine)
 
@@ -15,6 +15,7 @@ app=FastAPI(
     description="Candidate and job matching backend",
 )
 
+# HTTP requests
 
 @app.get("/")
 def welcome():
@@ -24,6 +25,7 @@ def welcome():
 def health_check():
     return {"status":"Server is running in okay condition"}
 
+# Candidate related HTTP requests
 @app.post(
     "/candidates/",
     response_model=CandidateResponse,
@@ -99,3 +101,46 @@ def candidate_data(candidate_id: int,
         )
 
     return candidate
+
+# Job related HTTP requests
+
+@app.post(
+    "/jobs/",
+    response_model=JobResponse,
+    status_code=status.HTTP_201_CREATED,)
+def job_creation(
+    job:JobCreate,
+    db: Annotated[Session, Depends(get_db)],
+):
+    
+    existing_job= db.scalar(
+        select(JobDB.id).where(
+            JobDB.title == str(job.title),
+            JobDB.company == str(job.company),
+            JobDB.location == str(job.location),
+        )
+    )
+
+    if existing_job is not None:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="This Job already exists",
+        )
+
+    job_data = job.model_dump(mode="json")
+    database_job =JobDB(**job_data)
+
+    try: 
+        db.add(database_job)
+        db.commit()
+        db.refresh(database_job)
+
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Job already exists",
+        )
+    
+    return database_job
+
