@@ -75,3 +75,12 @@ def candidate_creation(
         )
 
     return database_candidate
+
+
+@app.get("/candidates",
+        response_model=list[CandidateResponse],)
+def candidates_list(db: Annotated[Session, Depends(get_db)],):
+    statement = select(CandidateDB)
+    candidates = db.scalars(statement).all()
+
+    return candidates
