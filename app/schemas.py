@@ -154,7 +154,7 @@ class JobCreate(BaseModel):
         str,
         Field(
             min_length=2,
-            max_length=100,
+            max_length=200,
             title="Name of the Company",
             description="Enter Name of the Company",
         ),
