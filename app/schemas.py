@@ -127,8 +127,8 @@ class CandidateCreate(BaseModel):
 
         return cleaned_skills or None
     
-    class CandidateResponse(CandidateCreate):
-        id: int
-        created_at: datetime
+class CandidateResponse(CandidateCreate):
+    id: int
+    created_at: datetime
 
-        model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(from_attributes=True)
