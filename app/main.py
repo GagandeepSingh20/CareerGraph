@@ -145,10 +145,26 @@ def job_creation(
     return database_job
 
 @app.get("/jobs",
-         response_model=list[JobResponse],
+         response_model=JobResponse,
     )
 def job_list(db: Annotated[Session, Depends(get_db)]):
     statement = select(JobDB)
     jobs = db.scalars(statement).all()
-    
+
     return jobs
+
+@app.get("jobs/{job_id}",
+         response_model=list[JobResponse],)
+def job_data(job_id: int,
+              db: Annotated[Session, Depends(get_db)]
+):
+    statement = select(JobDB).where(JobDB.id == job_id)
+    job = db.scalar(statement)
+
+    if job is None:
+        raise HTTPException(
+            status_code= status.HTTP_404_NOT_FOUND,
+            detail="Job not found",
+        )
+
+    return job
