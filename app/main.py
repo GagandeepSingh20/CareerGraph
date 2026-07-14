@@ -144,3 +144,11 @@ def job_creation(
     
     return database_job
 
+@app.get("/jobs",
+         response_model=list[JobResponse],
+    )
+def job_list(db: Annotated[Session, Depends(get_db)]):
+    statement = select(JobDB)
+    jobs = db.scalars(statement).all()
+    
+    return jobs
