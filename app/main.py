@@ -154,7 +154,7 @@ def job_list(db: Annotated[Session, Depends(get_db)]):
     return jobs
 
 @app.get("/jobs/{job_id}",
-         response_model=list[JobResponse],)
+         response_model=JobResponse,)
 def job_data(job_id: int,
               db: Annotated[Session, Depends(get_db)]
 ):
