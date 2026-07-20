@@ -3,10 +3,8 @@ from datetime import datetime, timezone
 from sqlalchemy import DateTime, Float, Integer, String, Boolean, JSON
 from sqlalchemy.orm import Mapped, mapped_column
 
-from .database import Base
-
-def current_utc_time() -> datetime:
-    return datetime.now(timezone.utc)
+from app.database import Base
+from .utils import current_utc_time
 
 
 class UserDB(Base):

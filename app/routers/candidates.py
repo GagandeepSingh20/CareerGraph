@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.models import CandidateDB
+from app.models.candidate import CandidateDB
 from app.schemas import CandidateCreate, CandidateResponse
 
 
