@@ -28,7 +28,6 @@ class UserDB(Base):
 
     hashed_password: Mapped[str] = mapped_column(
         String,
-        index = True,
         nullable = False,
     )
 
@@ -37,12 +36,13 @@ class UserDB(Base):
         nullable = False,
     )
 
-    created_at: Mapped[DateTime] = mapped_column(
+    created_at: Mapped[datetime] = mapped_column(
         DateTime,
-        nullable= False
+        default= current_utc_time,
     )
 
     is_active: Mapped[bool] = mapped_column(
         Boolean,
-        nullable= False
+        default= True,
+        nullable= False,
     )
