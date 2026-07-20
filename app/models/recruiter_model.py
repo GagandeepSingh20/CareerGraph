@@ -4,11 +4,7 @@ from sqlalchemy import DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database import Base
-
-
-def current_utc_time() -> datetime:
-    return datetime.now(timezone.utc)
-
+from .utils import current_utc_time
 
 class RecruiterProfileDB(Base):
 
@@ -57,4 +53,4 @@ class RecruiterProfileDB(Base):
         DateTime(timezone=True),
         default=current_utc_time,
         nullable=False,
-    )m
+    )

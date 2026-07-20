@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.models.job import JobDB
+from app.models.job_model import JobDB
 from app.schemas import JobCreate, JobResponse
 
 
