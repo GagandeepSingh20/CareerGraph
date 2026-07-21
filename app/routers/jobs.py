@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.job_model import JobDB
-from app.schemas import JobCreate, JobResponse
+from app.schemas.job_schema import JobCreate, JobResponse
 
 
 router = APIRouter(

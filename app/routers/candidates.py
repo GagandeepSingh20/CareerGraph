@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.candidate_model import CandidateDB
-from app.schemas import CandidateCreate, CandidateResponse
+from app.schemas.candidate_schema import CandidateCreate, CandidateResponse
 
 
 router = APIRouter(
