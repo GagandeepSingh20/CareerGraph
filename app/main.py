@@ -1,7 +1,11 @@
 from fastapi import FastAPI
 
-from .database import Base, engine
-from .routers import candidates, jobs
+from app.database import Base, engine
+from app.models.candidate_model import CandidateDB
+from app.models.job_model import JobDB
+from app.models.recruiter_model import RecruiterProfileDB
+from app.models.user_model import UserDB
+from app.routers import candidates, jobs
 
 
 Base.metadata.create_all(bind=engine)
